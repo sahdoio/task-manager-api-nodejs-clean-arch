@@ -1,0 +1,38 @@
+version: '3'
+
+networks:
+  task-manager-api-network:
+    driver: bridge
+    ipam:
+      driver: default
+
+services:
+  task-manager-api:
+    container_name: task-manager-api
+    image: task-manager-api
+    build:
+      context: .
+      dockerfile: ./docker/api.Dockerfile
+    volumes:
+      - './:/var/www/app'
+      - '/var/www/app/node_modules'
+    environment:
+      - npm_config_unsafe_perm=true
+    ports:
+      - "3000:3000"
+    networks:
+      - task-manager-api-network
+
+  task-manager-db:
+    container_name: task-manager-db
+    image: postgres
+    environment:
+      POSTGRES_DB: taskmanager
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: secret
+      PGDATA: /data/postgres
+    ports:
+      - "5432:5432"
+    restart: unless-stopped
+    networks:
+      - task-manager-api-network
