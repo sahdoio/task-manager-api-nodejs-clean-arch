@@ -12,8 +12,4 @@ export interface PaginatedResult<T> {
   metadata: RepositoryMetadata
 }
 
-export interface Repository {
-  testConnection: () => Promise<void>
-  // validateUniques: (data: any, uniqueFields: string[], transaction?: any) => Promise<string[]>
-  // setupPagination: (queryBuilder: SelectQueryBuilder<any>, opts?: UcOptions) => Promise<RepositoryMetadata>
-}
+export interface Repository { }

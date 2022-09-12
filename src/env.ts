@@ -11,8 +11,8 @@ const env = {
     NAME: 'FROM_ENV'    
   }, 
   i18n: {
-    LOCALES: ['br', 'en'],
-    DEFAULT_LOCALE: 'br'
+    LOCALES: ['en'],
+    DEFAULT_LOCALE: 'en'
   },
   paginatedResult: {
     defaultItemsPerPage: 10,

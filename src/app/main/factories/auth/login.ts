@@ -6,9 +6,11 @@ import { I18n } from '../../../implementations/internationalization/i18n'
 import { PersonalFieldValidator } from '../../../implementations/helpers/validate-fields'
 import { DbFindUserRepository } from '../../../implementations/repositories/user/db-find-user-repository'
 import { Bcrypt } from '../../../implementations/encrypters/bcrypt'
+import { SequelizeORM } from '../../../implementations/database/sequelize'
 
 export const makeLoginController = (): LoginController => {
-  const findUserRepository = new DbFindUserRepository()
+  const dbORM = SequelizeORM.getInstance()
+  const findUserRepository = new DbFindUserRepository(dbORM)
   const bcrypt = new Bcrypt()
   const jsonWebToken = new JsonWebToken()
   const i18n = new I18n()

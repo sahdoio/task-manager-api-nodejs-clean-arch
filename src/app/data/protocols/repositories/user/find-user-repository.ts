@@ -5,5 +5,5 @@ import { PaginatedResult, Repository } from '../repository'
 
 export interface FindUserRepository extends Repository {
   findOne: (data: FindUserDto, opts?: UcOptions, strictEmail?: boolean) => Promise<UserEntity>
-  // findAll: (data: FindUserDto, transaction?: any, opts?: UcOptions) => Promise<PaginatedResult<UserEntity[]>>
+  findAll: (data: FindUserDto, opts?: UcOptions) => Promise<PaginatedResult<UserEntity[]>>
 }
