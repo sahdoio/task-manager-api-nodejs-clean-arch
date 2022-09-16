@@ -94,13 +94,4 @@ export class Application {
       defaultLocale: env.i18n.DEFAULT_LOCALE
     })
   }
-
-  public async setupDb(): Promise<boolean> {
-    const environment = process.env.NODE_ENV?.trim().toLowerCase()
-    console.log(`Db is running in ${environment} environment`)
-    return await new Promise(async (resolve) => {
-      resolve(true)
-      console.log('Database Connection Started')
-    })
-  }
 }

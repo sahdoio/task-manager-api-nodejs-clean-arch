@@ -22,30 +22,25 @@ export class Login implements LoginUc {
     if (!user) {
       return unprocessableEntity(this.i18n.t('INVALID_LOGIN'))
     }
-
     const isCorrect = await this.passwordEncrypter.compare(password, user.password)
     if (!isCorrect) {
       return unprocessableEntity(this.i18n.t('INVALID_LOGIN'))
     }
-
     const userData = {
         id: user.id,
         email: user.email,
         firstName: user.firstName,
         lastName: user.lastName
     }
-
     const jwtData = {
       id: user.id,
       email: user.email,   
     }
-
     const accessToken: string = await this.jwt.sign(jwtData, this.jwtConfig)
     const loginResponseDto: LoginResponseDto = {
       accessToken,
       user: userData,
     }
-
     return ok(this.i18n.t('LOGIN_SUCCESSFUL'), loginResponseDto)
   }
 }

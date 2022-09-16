@@ -15,6 +15,10 @@ module.exports = {
       },
       firstName: Sequelize.DataTypes.STRING,
       lastName: Sequelize.DataTypes.STRING,
+      phoneNumber: {
+        type: Sequelize.DataTypes.STRING,
+        allowNull: false
+      },
       password: {
         type: Sequelize.DataTypes.STRING,
         allowNull: false

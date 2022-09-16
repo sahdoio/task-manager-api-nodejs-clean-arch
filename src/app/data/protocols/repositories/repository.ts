@@ -12,4 +12,6 @@ export interface PaginatedResult<T> {
   metadata: RepositoryMetadata
 }
 
-export interface Repository { }
+export interface Repository {
+  setupPagination (payload: any[], opts?: UcOptions): Promise<RepositoryMetadata>
+}

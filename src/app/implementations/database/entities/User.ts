@@ -7,7 +7,7 @@ import { UserEntity } from '../../../domain/entities/User'
 })
 export class User extends Model<User> implements UserEntity {
   @PrimaryKey
-  @Column
+  @Column({ autoIncrement: true })
   id: number
 
   @Column
@@ -18,6 +18,9 @@ export class User extends Model<User> implements UserEntity {
 
   @Column
   lastName?: string
+
+  @Column
+  phoneNumber: string
 
   @Column
   password?: string
