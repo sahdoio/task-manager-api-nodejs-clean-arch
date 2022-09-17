@@ -19,7 +19,7 @@ services:
     environment:
       - npm_config_unsafe_perm=true
     ports:
-      - "3000:3000"
+      - "3030:3000"
     networks:
       - task-manager-api-network
 

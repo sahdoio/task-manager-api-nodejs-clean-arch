@@ -43,6 +43,5 @@ describe('CreateUserController', () => {
     const res = await sut.handle(data)
     expect(res.statusCode).toBe(200)
     expect(res.body.msg).toBe(i18nStub.t('CREATE_USER_SUCCESSFUL'))
-    expect(res.body.data).toEqual(await userEntityMock)
   })
 })

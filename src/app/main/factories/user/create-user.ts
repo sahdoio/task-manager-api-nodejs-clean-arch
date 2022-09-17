@@ -1,5 +1,6 @@
 import { CreateUser } from "../../../data/useCases/user/create-user"
 import { SequelizeORM } from "../../../implementations/database/sequelize"
+import { Bcrypt } from "../../../implementations/encrypters/bcrypt"
 import { PersonalFieldValidator } from "../../../implementations/helpers/validate-fields"
 import { I18n } from "../../../implementations/internationalization/i18n"
 import { DbCreateUserRepository } from "../../../implementations/repositories/user/db-create-user-repository"
@@ -12,7 +13,8 @@ export const makeCreateUserController = (): CreateUserController => {
   const dbORM = SequelizeORM.getInstance()
   const createUserRepository = new DbCreateUserRepository(dbORM)
   const findUserRepository = new DbFindUserRepository(dbORM)
-  const uc = new CreateUser(i18n, createUserRepository, findUserRepository)
+  const bcrypt = new Bcrypt()
+  const uc = new CreateUser(i18n, bcrypt, createUserRepository, findUserRepository)
   const validator = new PersonalFieldValidator()
   const controller = new CreateUserController(validator, uc)
   return controller

@@ -1,14 +1,14 @@
 import { ok } from '../../../../app/data/helpers/result'
 import { Internationalization } from '../../../../app/data/protocols/utils/internationalization'
 import { CreateUser } from '../../../../app/data/useCases/user/create-user'
-import { CreateUserDto } from '../../../../app/domain/useCases/user/create-user'
-import { userEntityMock } from '../../../utils/mocks/user/user-entity-mock'
+import { CreateUserDto, CreateUserUc } from '../../../../app/domain/useCases/user/create-user'
+import { BcryptStub } from '../../../utils/stubs/bcrypt-stub'
 import { I18nStub } from '../../../utils/stubs/i18n-stub'
 import { CreateUserRepositoryStub } from '../../../utils/stubs/repositories/user/create-user-repository-stub'
 import { FindUserRepositoryStub } from '../../../utils/stubs/repositories/user/find-user-repository-stub'
 
 interface SutTypes {
-  sut: CreateUser
+  sut: CreateUserUc
   i18nStub: Internationalization
   createUserRepositoryStub: CreateUserRepositoryStub
   createUserRepositoryDto: CreateUserDto,
@@ -24,10 +24,12 @@ const makeSut = (): SutTypes => {
     "password": "123456"
   }
   const i18nStub = new I18nStub()
+  const bcryptStub = new BcryptStub()
   const findUserRepositoryStub = new FindUserRepositoryStub()
   const createUserRepositoryStub = new CreateUserRepositoryStub()
   const sut = new CreateUser(
     i18nStub,
+    bcryptStub,
     createUserRepositoryStub,
     findUserRepositoryStub
   )
@@ -45,6 +47,6 @@ describe('CreateUser', () => {
     const { sut, i18nStub, createUserRepositoryDto, findUserRepositoryStub } = makeSut()
     jest.spyOn(findUserRepositoryStub, 'findOne').mockImplementation(() => null)
     const res = await sut.exec(createUserRepositoryDto)
-    expect(res).toEqual(ok(i18nStub.t('CREATE_USER_SUCCESSFUL'), await userEntityMock))
+    expect(res).toEqual(ok(i18nStub.t('CREATE_USER_SUCCESSFUL')))
   })
 })

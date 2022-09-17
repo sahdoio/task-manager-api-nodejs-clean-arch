@@ -8,8 +8,8 @@ import { UcOptions } from '../../../domain/protocols/uc-options'
 
 export class LoginController implements Controller {
   constructor (
-    private readonly loginUc: LoginUc,
-    private readonly validator: FieldValidator
+    private readonly validator: FieldValidator,
+    private readonly loginUc: LoginUc
   ) {}
 
   async handle (httpRequest: HttpRequest): Promise<HttpResponse> {

@@ -19,13 +19,13 @@ export const makeLoginController = (): LoginController => {
     expiresIn: env.security.JWT_EXPIRES_IN
   }
   const loginUc = new Login(
-    findUserRepository,
-    bcrypt,
     i18n,
+    bcrypt,
     jsonWebToken,
     jwtConfig,
+    findUserRepository
   )
   const validator = new PersonalFieldValidator()
-  const loginController = new LoginController(loginUc, validator)
+  const loginController = new LoginController(validator, loginUc)
   return loginController
 }

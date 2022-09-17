@@ -6,8 +6,6 @@
 import env from '../../../env'
 import { Repository, RepositoryMetadata } from '../../data/protocols/repositories/repository'
 import { UcOptions } from '../../domain/protocols/uc-options'
-import { stringToBoolean } from '../../presentation/helpers/normalizeFields'
-import { Sequelize } from 'sequelize-typescript'
 
 export abstract class DbRepository implements Repository {
   protected entity: any

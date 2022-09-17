@@ -4,11 +4,13 @@ import { CreateUserDto, CreateUserUc } from '../../../domain/useCases/user/creat
 import { ok, unprocessableEntity } from '../../helpers/result'
 import { CreateUserRepository } from '../../protocols/repositories/user/create-user-repository'
 import { FindUserRepository } from '../../protocols/repositories/user/find-user-repository'
+import { Encrypter } from '../../protocols/utils/encrypter'
 import { Internationalization } from '../../protocols/utils/internationalization'
 
 export class CreateUser implements CreateUserUc {
   constructor (
     private readonly i18n: Internationalization,
+    private readonly bcrypt: Encrypter,
     private readonly createUserRepository: CreateUserRepository,
     private readonly findUserRepository: FindUserRepository
   ) { }
@@ -23,7 +25,7 @@ export class CreateUser implements CreateUserUc {
     if (existingAccount) {
       return unprocessableEntity(this.i18n.t('ERROR_EXISTING_USER'))
     }
-    const result = await this.createUserRepository.exec(data)
-    return ok(this.i18n.t('CREATE_USER_SUCCESSFUL'), result)
+    await this.createUserRepository.exec({ ...data, password: await this.bcrypt.encrypt(data.password) })
+    return ok(this.i18n.t('CREATE_USER_SUCCESSFUL'))
   }
 }
