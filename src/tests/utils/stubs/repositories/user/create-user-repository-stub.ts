@@ -6,6 +6,6 @@ import { DbRepositoryStub } from '../db-repository-stub'
 
 export class CreateUserRepositoryStub extends DbRepositoryStub implements CreateUserRepository {
   async exec (data: CreateUserDto): Promise<UserEntity> {
-    return await userEntityMock
+    return userEntityMock
   }
 }

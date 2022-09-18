@@ -1,4 +1,4 @@
-import { ok } from '../../../../app/data/helpers/result'
+import { ok, unprocessableEntity } from '../../../../app/data/helpers/result'
 import { Internationalization } from '../../../../app/data/protocols/utils/internationalization'
 import { Login } from '../../../../app/data/useCases/auth/login'
 import { LoginUc } from '../../../../app/domain/useCases/auth/login'
@@ -22,7 +22,7 @@ interface SutTypes {
   loginCredentials: LoginCredentials
 }
 
-const makeSut = async (): Promise<SutTypes> => {
+const makeSut = (): SutTypes => {
   const i18nStub = new I18nStub()
   const bcryptStub = new BcryptStub()
   const jwtStub = new JwtStub()
@@ -31,10 +31,9 @@ const makeSut = async (): Promise<SutTypes> => {
     expiresIn: env.security.JWT_EXPIRES_IN
   }
   const findUserRepositoryStub = new FindUserRepositoryStub()
-  const userMock = await userEntityMock
   const loginCredentials: LoginCredentials = {
-    email: userMock.email,
-    password: userMock.password
+    email: userEntityMock.email,
+    password: userEntityMock.password
   }
   const sut = new Login(
     i18nStub,
@@ -53,9 +52,21 @@ const makeSut = async (): Promise<SutTypes> => {
 
 describe('Login', () => {
   test('Should return 200 if the login was executed successfully', async () => {
-    const { sut, i18nStub, findUserRepositoryStub, loginCredentials } = await makeSut()
-    await jest.spyOn(findUserRepositoryStub, 'findOne').mockImplementation(async () => await userEntityMock)
+    const { sut, i18nStub, loginCredentials } = makeSut()
     const res = await sut.exec(loginCredentials.email, loginCredentials.password)
     expect(res).toEqual(ok(i18nStub.t('LOGIN_SUCCESSFUL'), await loginResponseMock))
+  })
+
+  test('Should return 422 if user not found', async () => {
+    const { sut, i18nStub, findUserRepositoryStub, loginCredentials } = makeSut()
+    await jest.spyOn(findUserRepositoryStub, 'findOne').mockImplementationOnce(async () => null)
+    const res = await sut.exec(loginCredentials.email, loginCredentials.password)
+    expect(res).toEqual(unprocessableEntity(i18nStub.t('INVALID_LOGIN')))
+  })
+
+  test('Should return 422 if login credentials are incorrect', async () => {
+    const { sut, i18nStub } = makeSut()
+    const res = await sut.exec('wrong_email@test.com', 'wrong_password')
+    expect(res).toEqual(unprocessableEntity(i18nStub.t('INVALID_LOGIN')))
   })
 })

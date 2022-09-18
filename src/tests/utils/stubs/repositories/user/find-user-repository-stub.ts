@@ -15,7 +15,7 @@ export class FindUserRepositoryStub extends DbRepositoryStub implements FindUser
   async findAll(data: FindUserDto, opts?: UcOptions): Promise<PaginatedResult<UserEntity[]>> {
     return {
       metadata: repositoryMetadataMock,
-      payload: [await userEntityMock]
+      payload: [userEntityMock]
     }
   }
 }

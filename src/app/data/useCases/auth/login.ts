@@ -7,6 +7,7 @@ import { JwtConfig } from '../../protocols/auth/jwt-config'
 import { Internationalization } from '../../protocols/utils/internationalization'
 import { FindUserRepository } from '../../protocols/repositories/user/find-user-repository'
 import { UcOptions } from '../../../domain/protocols/uc-options'
+import { UserEntity } from '../../../domain/entities/User'
 
 export class Login implements LoginUc {
   constructor (
@@ -31,7 +32,6 @@ export class Login implements LoginUc {
       email: user.email,   
     }
     const accessToken: string = await this.jwt.sign(jwtData, this.jwtConfig)
-    delete user.password
     const loginResponseDto: LoginResponseDto = {
       accessToken,
       user,
