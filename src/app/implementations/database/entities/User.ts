@@ -1,13 +1,14 @@
-import { Table, Column, PrimaryKey, Model, CreatedAt, UpdatedAt, DeletedAt } from 'sequelize-typescript'
+import { Table, Column, PrimaryKey, Model, CreatedAt, UpdatedAt, DeletedAt, Scopes } from 'sequelize-typescript'
 import { UserEntity } from '../../../domain/entities/User'
 
 @Table({
   tableName: 'users',
   timestamps: true
 })
+
 export class User extends Model<User> implements UserEntity {
   @PrimaryKey
-  @Column
+  @Column({ autoIncrement: true })
   id: number
 
   @Column
@@ -20,7 +21,10 @@ export class User extends Model<User> implements UserEntity {
   lastName?: string
 
   @Column
-  password?: string
+  phoneNumber: string
+
+  @Column
+  password: string
 
   @CreatedAt
   createdAt: Date;
@@ -29,5 +33,5 @@ export class User extends Model<User> implements UserEntity {
   updatedAt: Date;
 
   @DeletedAt
-  deletedAt: Date;
+  deletedAt?: Date;
 }

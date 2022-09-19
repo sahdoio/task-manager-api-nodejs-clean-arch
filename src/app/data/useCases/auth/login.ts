@@ -7,14 +7,15 @@ import { JwtConfig } from '../../protocols/auth/jwt-config'
 import { Internationalization } from '../../protocols/utils/internationalization'
 import { FindUserRepository } from '../../protocols/repositories/user/find-user-repository'
 import { UcOptions } from '../../../domain/protocols/uc-options'
+import { UserEntity } from '../../../domain/entities/User'
 
 export class Login implements LoginUc {
   constructor (
-    private readonly findUserRepository: FindUserRepository,
-    private readonly passwordEncrypter: Encrypter,
     private readonly i18n: Internationalization,
+    private readonly passwordEncrypter: Encrypter,
     private readonly jwt: JWT,
-    private readonly jwtConfig: JwtConfig
+    private readonly jwtConfig: JwtConfig,
+    private readonly findUserRepository: FindUserRepository
   ) {}
 
   async exec (email: string, password: string, ucOptions?: UcOptions): Promise<Result<LoginResponseDto>> {
@@ -22,30 +23,19 @@ export class Login implements LoginUc {
     if (!user) {
       return unprocessableEntity(this.i18n.t('INVALID_LOGIN'))
     }
-
     const isCorrect = await this.passwordEncrypter.compare(password, user.password)
     if (!isCorrect) {
       return unprocessableEntity(this.i18n.t('INVALID_LOGIN'))
-    }
-
-    const userData = {
-        id: user.id,
-        email: user.email,
-        firstName: user.firstName,
-        lastName: user.lastName
-    }
-
+    }   
     const jwtData = {
       id: user.id,
       email: user.email,   
     }
-
     const accessToken: string = await this.jwt.sign(jwtData, this.jwtConfig)
     const loginResponseDto: LoginResponseDto = {
       accessToken,
-      user: userData,
+      user,
     }
-
     return ok(this.i18n.t('LOGIN_SUCCESSFUL'), loginResponseDto)
   }
 }
