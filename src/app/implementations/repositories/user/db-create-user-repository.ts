@@ -16,7 +16,6 @@ export class DbCreateUserRepository extends DbRepository implements CreateUserRe
   async exec(data: FindUserDto): Promise<UserEntity> {
     const dbORMClient = await this.dbORM.getClient()
     const userRepository = await dbORMClient.getRepository(User)
-    console.log('data: ', data)
     const user = await userRepository.create(data)
     return user
   }

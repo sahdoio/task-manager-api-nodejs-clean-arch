@@ -1,7 +1,7 @@
 import { LoginResponseDto } from "../../../../app/domain/useCases/auth/login";
 import { userEntityMock } from "../user/user-entity-mock";
 
-export const loginResponseMock: Promise<LoginResponseDto> = (async () => ({
+export const loginResponseMock: LoginResponseDto = {
     accessToken: 'token',
-    user: await userEntityMock,
-}))()
+    user: userEntityMock,
+}

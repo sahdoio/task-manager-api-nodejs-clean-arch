@@ -12,7 +12,7 @@ export class JsonWebToken implements JWT {
     )
   }
 
-  async verify (token: string, key: string, ignoreExpiration?: boolean): Promise<Token> {
+  async verify (token: string, key: string, ignoreExpiration?: boolean): Promise<Token|null> {
     try {
       return (jsonWebToken.verify(token, key, { ignoreExpiration })) as Token
     } catch (err) {

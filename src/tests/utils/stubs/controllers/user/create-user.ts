@@ -5,10 +5,10 @@ import { userEntityMock } from '../../../mocks/user/user-entity-mock'
 import { I18nStub } from '../../i18n-stub'
 
 export class CreateUserUcStub implements CreateUserUc {
-  async exec (data: CreateUserDto): Promise<Result<UserEntity>> {
+  async exec(data: CreateUserDto): Promise<Result<UserEntity>> {
     return {
       code: 200,
-      data: await userEntityMock,
+      data: userEntityMock,
       msg: new I18nStub().t('CREATE_USER_SUCCESSFUL')
     }
   }

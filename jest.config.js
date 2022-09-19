@@ -6,6 +6,7 @@ module.exports = {
     'node_modules',
     'main',
     'entities',
+    'database',
     'env',
     'server.ts',
     'errors/index.ts'

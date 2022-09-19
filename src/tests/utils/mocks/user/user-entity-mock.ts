@@ -6,6 +6,7 @@ export const userEntityMock: UserEntity = {
   email: 'user_test@test.com',
   firstName: 'User',
   lastName: 'Test',
+  phoneNumber: '5511999999999',
   password: '123456',
   createdAt: new Date(),
   updatedAt: new Date()

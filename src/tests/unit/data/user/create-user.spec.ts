@@ -1,7 +1,8 @@
-import { ok } from '../../../../app/data/helpers/result'
+import { ok, unprocessableEntity } from '../../../../app/data/helpers/result'
 import { Internationalization } from '../../../../app/data/protocols/utils/internationalization'
 import { CreateUser } from '../../../../app/data/useCases/user/create-user'
 import { CreateUserDto, CreateUserUc } from '../../../../app/domain/useCases/user/create-user'
+import { userEntityMock } from '../../../utils/mocks/user/user-entity-mock'
 import { BcryptStub } from '../../../utils/stubs/bcrypt-stub'
 import { I18nStub } from '../../../utils/stubs/i18n-stub'
 import { CreateUserRepositoryStub } from '../../../utils/stubs/repositories/user/create-user-repository-stub'
@@ -48,5 +49,18 @@ describe('CreateUser', () => {
     jest.spyOn(findUserRepositoryStub, 'findOne').mockImplementation(() => null)
     const res = await sut.exec(createUserRepositoryDto)
     expect(res).toEqual(ok(i18nStub.t('CREATE_USER_SUCCESSFUL')))
+  })
+
+  test('Should return 422 if the user already exists with the given email', async () => {
+    const { sut, i18nStub, createUserRepositoryDto } = makeSut()
+    const res = await sut.exec( { ...createUserRepositoryDto, email: userEntityMock.email })
+    expect(res).toEqual(unprocessableEntity(i18nStub.t('ERROR_EXISTING_USER')))
+  })
+
+  test('Should return 422 if the user already exists with the given phoneNumber', async () => {
+    const { sut, i18nStub, createUserRepositoryDto, findUserRepositoryStub } = makeSut()
+    jest.spyOn(findUserRepositoryStub, 'findOne').mockImplementationOnce(() => null)
+    const res = await sut.exec( { ...createUserRepositoryDto, phoneNumber: userEntityMock.phoneNumber })
+    expect(res).toEqual(unprocessableEntity(i18nStub.t('ERROR_EXISTING_USER')))
   })
 })

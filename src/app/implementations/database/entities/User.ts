@@ -24,7 +24,7 @@ export class User extends Model<User> implements UserEntity {
   phoneNumber: string
 
   @Column
-  password?: string
+  password: string
 
   @CreatedAt
   createdAt: Date;
@@ -33,5 +33,5 @@ export class User extends Model<User> implements UserEntity {
   updatedAt: Date;
 
   @DeletedAt
-  deletedAt: Date;
+  deletedAt?: Date;
 }
