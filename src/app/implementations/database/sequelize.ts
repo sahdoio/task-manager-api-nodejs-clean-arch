@@ -1,26 +1,32 @@
 import { Sequelize } from 'sequelize-typescript'
+import Config from '../../../config/config'
 import env from '../../../env'
 import { ISequelizeORM } from '../../data/protocols/utils/sequelize'
 
 export class SequelizeORM implements ISequelizeORM {
   private static instance: SequelizeORM
 
+  public source: string = Config.DATABASE.SOURCE.DEFAULT
   public client: Sequelize
 
   private constructor() { }
 
-  public static getInstance(): SequelizeORM {
+  public static getInstance(source: string = Config.DATABASE.SOURCE.DEFAULT): SequelizeORM {
     if (!SequelizeORM.instance) {
       SequelizeORM.instance = new SequelizeORM()
+      if (source) {
+        SequelizeORM.instance.source = source
+      }
       SequelizeORM.instance.client = new Sequelize({
-        database: env.database.NAME,
+        database: env.database[source].NAME,
         dialect: 'postgres',
-        username: env.database.USERNAME,
-        password: env.database.PASSWORD,
-        host: env.database.HOST,
-        port: parseInt(env.database.PORT),
+        username: env.database[source].USERNAME,
+        password: env.database[source].PASSWORD,
+        host: env.database[source].HOST,
+        port: parseInt(env.database[source].PORT),
         models: [__dirname + '/../database/entities'],
-        repositoryMode: true
+        repositoryMode: true,
+        logging: false
       })
     }
     return SequelizeORM.instance
@@ -39,7 +45,7 @@ export class SequelizeORM implements ISequelizeORM {
   }
 
   public async getClient(): Promise<Sequelize> {
-    const instance = SequelizeORM.getInstance()
+    const instance = SequelizeORM.getInstance(this.source)
     return instance.client
   }
 }

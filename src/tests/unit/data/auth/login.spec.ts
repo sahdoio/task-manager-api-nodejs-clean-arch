@@ -1,3 +1,4 @@
+import { Application } from '../../../../app'
 import { ok, unprocessableEntity } from '../../../../app/data/helpers/result'
 import { Internationalization } from '../../../../app/data/protocols/utils/internationalization'
 import { Login } from '../../../../app/data/useCases/auth/login'
@@ -23,6 +24,7 @@ interface SutTypes {
 }
 
 const makeSut = (): SutTypes => {
+  new Application(true)
   const i18nStub = new I18nStub()
   const bcryptStub = new BcryptStub()
   const jwtStub = new JwtStub()

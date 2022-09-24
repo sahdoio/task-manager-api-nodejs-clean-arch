@@ -3,10 +3,10 @@ import { StatusCodes } from 'http-status-codes'
 import { LoggedUser } from '../../domain/useCases/auth/authorizer'
 import { HttpRequest } from '../../presentation/protocols/http'
 import { Middleware } from '../../presentation/protocols/middleware'
-import { GamersBankRequest } from '../protocols/Request'
+import { DefaultRequest } from '../protocols/Request'
 
 export const adaptMiddleware = (middleware: Middleware, isAuth: boolean = false) => {
-  return async (req: GamersBankRequest, res: Response, next: NextFunction) => {
+  return async (req: DefaultRequest, res: Response, next: NextFunction) => {
     const request: HttpRequest = {
       body: req.body,
       params: req.params,

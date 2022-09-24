@@ -1,3 +1,4 @@
+import { Application } from '../../../../app'
 import { ok, unprocessableEntity } from '../../../../app/data/helpers/result'
 import { Internationalization } from '../../../../app/data/protocols/utils/internationalization'
 import { CreateUser } from '../../../../app/data/useCases/user/create-user'
@@ -17,6 +18,7 @@ interface SutTypes {
 }
 
 const makeSut = (): SutTypes => {
+  new Application(true)
   const createUserRepositoryDto = {
     "email": "create_user_unit_test@test.com",
     "firstName": "User",

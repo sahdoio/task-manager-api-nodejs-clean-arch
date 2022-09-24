@@ -5,11 +5,11 @@ import { loginResponseMock } from '../../../mocks/auth/login-response--mock'
 import { I18nStub } from '../../i18n-stub'
 
 export class LoginUcStub implements LoginUc {
-    async exec(email: string, password: string, ucOptions?: UcOptions): Promise<Result<LoginResponseDto>> {
-        return {
-            code: 200,
-            data: loginResponseMock,
-            msg: new I18nStub().t('LOGIN_SUCCESSFUL')
-        }
+  async exec(email: string, password: string, ucOptions?: UcOptions): Promise<Result<LoginResponseDto>> {
+    return {
+      code: 200,
+      data: loginResponseMock,
+      msg: new I18nStub().t('LOGIN_SUCCESSFUL')
     }
+  }
 }

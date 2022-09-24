@@ -2,12 +2,14 @@ import { AuthorizerUc, LoggedUser } from '../../../domain/useCases/auth/authoriz
 import { JWT } from '../../protocols/auth/jwt'
 import { JwtConfig } from '../../protocols/auth/jwt-config'
 import { FindUserRepository } from '../../protocols/repositories/user/find-user-repository'
+import { ILog } from '../../protocols/utils/log'
 
 export class Authorizer implements AuthorizerUc {
   constructor(
     private readonly jwt: JWT,
     private readonly jwtConfig: JwtConfig,
-    private readonly findUserRepository: FindUserRepository
+    private readonly findUserRepository: FindUserRepository,
+    private readonly log: ILog,
   ) { }
 
   async isAuthorized(accessToken: string): Promise<LoggedUser | boolean> {
@@ -23,7 +25,7 @@ export class Authorizer implements AuthorizerUc {
         email: user.email
       }
     } catch (err) {
-      console.error(err)
+      this.log.error(err)
       return false
     }
   }

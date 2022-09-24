@@ -2,8 +2,13 @@ import { JWT } from '../../data/protocols/auth/jwt'
 import jsonWebToken from 'jsonwebtoken'
 import { JwtConfig } from '../../data/protocols/auth/jwt-config'
 import { Token } from '../../domain/protocols/token'
+import { ILog } from '../../data/protocols/utils/log'
 
 export class JsonWebToken implements JWT {
+  constructor(
+    private readonly log: ILog
+  ) {}
+
   async sign (data: any, config: JwtConfig): Promise<string> {
     return jsonWebToken.sign(
       data,
@@ -16,7 +21,7 @@ export class JsonWebToken implements JWT {
     try {
       return (jsonWebToken.verify(token, key, { ignoreExpiration })) as Token
     } catch (err) {
-      console.error(err)
+      this.log.error(err)
       return null
     }
   }

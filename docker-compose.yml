@@ -27,12 +27,26 @@ services:
     container_name: task-manager-db
     image: postgres
     environment:
-      POSTGRES_DB: taskmanager
+      POSTGRES_DB: task-manager
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: secret
       PGDATA: /data/postgres
     ports:
       - "5432:5432"
+    restart: unless-stopped
+    networks:
+      - task-manager-api-network
+
+  task-manager-test-db:
+    container_name: task-manager-test-db
+    image: postgres
+    environment:
+      POSTGRES_DB: task-manager-test
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: secret
+      PGDATA: /data/postgres
+    ports:
+      - "5433:5432"
     restart: unless-stopped
     networks:
       - task-manager-api-network

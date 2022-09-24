@@ -1,5 +1,4 @@
 import { UserEntity } from "../../../../app/domain/entities/User";
-import { Bcrypt } from "../../../../app/implementations/encrypters/bcrypt";
 
 export const userEntityMock: UserEntity = {
   id: 1,

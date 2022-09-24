@@ -10,40 +10,46 @@ import env from './env'
 import { StatusCodes } from 'http-status-codes'
 import swaggerJSDoc from 'swagger-jsdoc'
 import swaggerUi from 'swagger-ui-express'
-import { Sequelize } from 'sequelize-typescript'
 
 export class Application {
   public app: Express
   public readonly rootDir: string
   public readonly routesDir: string
 
-  constructor() {
+  constructor(testing: boolean = false) {
     dotenv.config()
     this.rootDir = __dirname
     this.routesDir = path.join(this.rootDir, 'app', 'main', 'routes')
 
-    this.app = express()
-    this.setupDotEnv()
-    this.setupMiddlewares()
-    this.setupRoutes()
-    this.setupSwagger()
+    this.setupDotEnv(testing)
     this.setupI18n()
 
-    this.app.get('/', (req: Request, res: Response) => {
-      res.send(`API is alive in ${process.env.NODE_ENV} environment`)
-    })
+    if (!testing) {
+      this.app = express()
+      this.setupMiddlewares()
+      this.setupRoutes()
+      this.setupSwagger()
+    }
   }
 
-  private setupDotEnv(): void {
-    env.ENV = process.env.NODE_ENV
+  private setupDotEnv(testing: boolean = false): void {
+    env.ENV = testing ? 'test' : process.env.NODE_ENV ?? 'production'
     env.PORT = process.env.APP_PORT
-    env.database = {
+    env.database.DEFAULT = {
       DRIVER: process.env.DB_DRIVER,
       HOST: process.env.DB_HOST,
       PORT: process.env.DB_PORT,
       USERNAME: process.env.DB_USERNAME,
       PASSWORD: process.env.DB_PASSWORD,
       NAME: process.env.DB_NAME
+    }
+    env.database.TEST = {
+      DRIVER: process.env.DB_TEST_DRIVER,
+      HOST: process.env.DB_TEST_HOST,
+      PORT: process.env.DB_TEST_PORT,
+      USERNAME: process.env.DB_TEST_USERNAME,
+      PASSWORD: process.env.DB_TEST_PASSWORD,
+      NAME: process.env.DB_TEST_NAME
     }
   }
 
@@ -63,6 +69,9 @@ export class Application {
   }
 
   private setupRoutes(): void {
+    this.app.get('/', (req: Request, res: Response) => {
+      res.send(`API is alive in ${process.env.NODE_ENV} environment`)
+    })    
     const router = Router()
     this.app.use(env.ROUTE_ROOT, router)
     readdirSync(this.routesDir).map(async file => {
