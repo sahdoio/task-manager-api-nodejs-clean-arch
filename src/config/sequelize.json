@@ -2,21 +2,21 @@
   "development": {
     "username": "admin",
     "password": "secret",
-    "database": "taskmanager",
+    "database": "task-manager",
     "host": "task-manager-db",
     "dialect": "postgres"
   },
   "test": {
     "username": "admin",
     "password": "secret",
-    "database": "taskmanager",
-    "host": "task-manager-db",
+    "database": "task-manager-test",
+    "host": "task-manager-test-db",
     "dialect": "postgres"
   },
   "production": {
     "username": "admin",
     "password": "secret",
-    "database": "taskmanager",
+    "database": "task-manager",
     "host": "task-manager-db",
     "dialect": "postgres"
   }

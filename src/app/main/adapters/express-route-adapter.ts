@@ -4,10 +4,10 @@ import i18n from 'i18n'
 import { Response } from 'express'
 import { Controller } from '../../presentation/protocols/controller'
 import { HttpRequest } from '../../presentation/protocols/http'
-import { GamersBankRequest } from '../protocols/Request'
+import { DefaultRequest } from '../protocols/Request'
 
 export const adaptRoute = (controller: Controller) => {
-  return async (req: GamersBankRequest, res: Response) => {
+  return async (req: DefaultRequest, res: Response) => {
     const lang: string = req.query.lang as string
     if (lang) {
       i18n.setLocale(lang)

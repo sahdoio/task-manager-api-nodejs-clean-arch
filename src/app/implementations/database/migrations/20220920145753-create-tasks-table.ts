@@ -17,6 +17,11 @@ module.exports = {
         type: Sequelize.DataTypes.STRING,
         allowNull: true
       },
+      statusId: {
+        type: Sequelize.DataTypes.INTEGER,
+        allowNull: false,
+        references: { model: 'taskStatus', key: 'id' }
+      },
       createdAt: {
         type: Sequelize.DataTypes.DATE,
         allowNull: false

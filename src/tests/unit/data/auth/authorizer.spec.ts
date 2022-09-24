@@ -1,9 +1,11 @@
+import { Application } from '../../../../app'
 import { Authorizer } from '../../../../app/data/useCases/auth/authorizer'
 import { AuthorizerUc } from '../../../../app/domain/useCases/auth/authorizer'
 import env from '../../../../env'
 import { authorizerResponseMock } from '../../../utils/mocks/auth/authorizer-response-mock'
 import { userEntityMock } from '../../../utils/mocks/user/user-entity-mock'
 import { JwtStub } from '../../../utils/stubs/jwt-stub'
+import { LogStub } from '../../../utils/stubs/log-stub'
 import { FindUserRepositoryStub } from '../../../utils/stubs/repositories/user/find-user-repository-stub'
 
 interface LoginCredentials {
@@ -20,7 +22,9 @@ interface SutTypes {
 }
 
 const makeSut = (): SutTypes => {
+  new Application(true)
   const jwtStub = new JwtStub()
+  const logStub = new LogStub()
   const jwtConfig = {
     key: env.security.JWT_KEY,
     expiresIn: env.security.JWT_EXPIRES_IN
@@ -34,7 +38,8 @@ const makeSut = (): SutTypes => {
   const sut = new Authorizer(
       jwtStub,
       jwtConfig,
-      findUserRepositoryStub
+      findUserRepositoryStub,
+      logStub
   )
   return {
     sut,

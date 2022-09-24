@@ -5,10 +5,12 @@ import { HttpRequest, HttpResponse } from '../../protocols/http'
 import { FieldValidator } from '../../../data/protocols/utils/field-validator'
 import { missingFields } from '../../helpers/response-builder'
 import { UcOptions } from '../../../domain/protocols/uc-options'
+import { ILog } from '../../../data/protocols/utils/log'
 
 export class LoginController implements Controller {
   constructor (
     private readonly validator: FieldValidator,
+    private readonly log: ILog,
     private readonly loginUc: LoginUc
   ) {}
 
@@ -27,7 +29,7 @@ export class LoginController implements Controller {
       }
       return serverResponse(res)
     } catch (err) {
-      console.log(err)
+      this.log.error(err)
       return serverError()
     }
   }
