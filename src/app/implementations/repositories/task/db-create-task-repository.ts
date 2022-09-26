@@ -16,6 +16,6 @@ export class DbCreateTaskRepository extends DbRepository implements CreateTaskRe
   async exec(data: CreateTaskDto): Promise<TaskEntity> {
     const dbORMClient = await this.dbORM.getClient()
     const repo = await dbORMClient.getRepository(Task)
-    return await repo.create(data)
+    return (await repo.create(data)).get()
   }
 }

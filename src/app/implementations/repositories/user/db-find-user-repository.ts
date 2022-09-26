@@ -6,6 +6,7 @@ import { FindUserDto } from '../../../domain/useCases/user/find-user'
 import { DbRepository } from '../repository'
 import { User } from '../../database/entities/User'
 import { ISequelizeORM } from '../../../data/protocols/utils/sequelize'
+import { Repository } from 'sequelize-typescript'
 
 export class DbFindUserRepository extends DbRepository implements FindUserRepository {
   constructor(
@@ -15,18 +16,34 @@ export class DbFindUserRepository extends DbRepository implements FindUserReposi
     super.entity = User
   }
 
-  async findAll(data: FindUserDto, opts?: UcOptions): Promise<PaginatedResult<UserEntity[]>> {
+  private async getRepo(): Promise<Repository<User>> {
     const dbORMClient = await this.dbORM.getClient()
-    const userRepository = await dbORMClient.getRepository(User)
-    const payload = await userRepository.findAll({ where: { ...data }})
-    const metadata = await this.setupPagination(payload, opts)
-    return { payload, metadata }
+    const repo = await dbORMClient.getRepository(User)
+    return repo
+  }
+
+  private getQueryData(data: FindUserDto) {
+    const queryData: any = {}
+    for (let key in data) {
+      if (data[key]) {
+        queryData[key] = data[key]
+      }
+    }
+    return queryData
   }
 
   async findOne(data: FindUserDto, opts?: UcOptions): Promise<UserEntity> {
-    const dbORMClient = await this.dbORM.getClient()
-    const userRepository = await dbORMClient.getRepository(User)
-    const payload = await userRepository.findOne({ where: { ...data }})
+    const repo = await this.getRepo()
+    const queryData = this.getQueryData(data)
+    const payload = await repo.findOne({ where: queryData })
     return payload
+  }
+
+  async findAll(data: FindUserDto, opts?: UcOptions): Promise<PaginatedResult<UserEntity[]>> {
+    const repo = await this.getRepo()
+    const queryData = this.getQueryData(data)
+    const payload = await repo.findAll({ where: queryData })
+    const metadata = await this.getMetadata(repo, queryData, opts)
+    return { payload, metadata }
   }
 }

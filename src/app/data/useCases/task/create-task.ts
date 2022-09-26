@@ -13,7 +13,7 @@ export class CreateTask implements CreateTaskUc {
 
   async exec (data: CreateTaskDto): Promise<Result<TaskEntity>> {
     const { name, description, statusId } = data
-    await this.createTaskRepository.exec({ name, description, statusId })
-    return ok(this.i18n.t('CREATE_TASK_SUCCESSFUL'))
+    const task = await this.createTaskRepository.exec({ name, description, statusId })
+    return ok(this.i18n.t('CREATE_TASK_SUCCESSFUL'), task)
   }
 }

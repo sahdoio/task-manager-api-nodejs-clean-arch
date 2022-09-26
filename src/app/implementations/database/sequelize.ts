@@ -26,7 +26,8 @@ export class SequelizeORM implements ISequelizeORM {
         port: parseInt(env.database[source].PORT),
         models: [__dirname + '/../database/entities'],
         repositoryMode: true,
-        logging: false
+        logging: false,
+        query: { raw: true }
       })
     }
     return SequelizeORM.instance

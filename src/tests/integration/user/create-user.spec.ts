@@ -24,6 +24,7 @@ interface SutTypes {
   uc: CreateUserUc
   i18n: Internationalization
   personalValidator: FieldValidator
+  userData: CreateUserDto
 }
 
 const makeSut = async (): Promise<SutTypes> => {
@@ -52,16 +53,18 @@ const makeSut = async (): Promise<SutTypes> => {
     data,
     i18n,
     uc,
-    personalValidator
+    personalValidator,
+    userData
   }
 }
 
 describe('CreateUserController Integration', () => {
   test('Should return Ok if user was created successfully', async () => {
-    const { sut, data, i18n } = await makeSut()
+    const { sut, data, i18n, userData } = await makeSut()
     const res = await sut.handle(data)
     expect(res.statusCode).toBe(200)
     expect(res.body.msg).toBe(i18n.t('CREATE_USER_SUCCESSFUL'))
+    expect(res.body?.data?.email).toBe(userData.email)
   })
 
   test('Should return 422 if user creation was executed with missing parameters', async () => {

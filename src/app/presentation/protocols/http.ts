@@ -16,5 +16,4 @@ export interface HttpRequest {
   params?: any
   headers?: any
   currentUser?: LoggedUser
-  currentGroup?: number
 }
