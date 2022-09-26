@@ -35,14 +35,15 @@ export class DbFindUserRepository extends DbRepository implements FindUserReposi
   async findOne(data: FindUserDto, opts?: UcOptions): Promise<UserEntity> {
     const repo = await this.getRepo()
     const queryData = this.getQueryData(data)
-    const payload = await repo.findOne({ where: queryData })
+    const payload = Object.keys(queryData).length > 0 ? await repo.findOne({ where: queryData }) : null
     return payload
   }
 
   async findAll(data: FindUserDto, opts?: UcOptions): Promise<PaginatedResult<UserEntity[]>> {
     const repo = await this.getRepo()
     const queryData = this.getQueryData(data)
-    const payload = await repo.findAll({ where: queryData })
+    const setupPaginationData = await this.setupPagination(opts)
+    const payload = await repo.findAll({ where: queryData, ...setupPaginationData })
     const metadata = await this.getMetadata(repo, queryData, opts)
     return { payload, metadata }
   }

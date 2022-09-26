@@ -4,9 +4,10 @@ import { Result } from '../../protocols/result'
 import { UcOptions } from '../../protocols/uc-options'
 
 export interface FindTaskDto {
-  name: string
+  id?: number,
+  name?: string
   description?: string
-  statusId: number
+  statusId?: number
 }
 
 export interface ListTasksUc {

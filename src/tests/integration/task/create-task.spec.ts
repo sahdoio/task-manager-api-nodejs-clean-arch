@@ -5,6 +5,7 @@ import { Internationalization } from '../../../app/data/protocols/utils/internat
 import { CreateTask } from '../../../app/data/useCases/task/create-task'
 import { CreateTaskDto, CreateTaskUc } from '../../../app/domain/useCases/task/create-task'
 import { SequelizeORM } from '../../../app/implementations/database/sequelize'
+import { Log } from '../../../app/implementations/helpers/log'
 import { PersonalFieldValidator } from '../../../app/implementations/helpers/validate-fields'
 import { I18n } from '../../../app/implementations/internationalization/i18n'
 import { DbCreateTaskRepository } from '../../../app/implementations/repositories/task/db-create-task-repository'
@@ -13,7 +14,6 @@ import { missingFields } from '../../../app/presentation/helpers/response-builde
 import { HttpRequest } from '../../../app/presentation/protocols/http'
 import Config from '../../../config/config'
 import { makeHttpRequestMock } from '../../utils/mocks/http-request'
-import { LogStub } from '../../utils/stubs/log-stub'
 
 interface SutTypes {
   sut: CreateTaskController
@@ -31,8 +31,8 @@ const makeSut = (): SutTypes => {
   const createTaskRepository = new DbCreateTaskRepository(dbORM)
   const uc = new CreateTask(i18n, createTaskRepository)
   const personalValidator = new PersonalFieldValidator()
-  const logStub = new LogStub
-  const sut = new CreateTaskController(personalValidator, logStub, uc)
+  const log = new Log
+  const sut = new CreateTaskController(personalValidator, log, uc)
   const taskData: CreateTaskDto = {
     name: 'Task ' + faker.word.adjective(5),
     description: faker.lorem.lines(3),
