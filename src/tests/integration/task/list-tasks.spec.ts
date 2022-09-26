@@ -43,7 +43,7 @@ const makeSut = async (): Promise<SutTypes> => {
   }
   const data = makeHttpRequestMock({
     body: {
-      taskData
+      ...taskData
     },
     query: {
       itemsPerPage: 10,
