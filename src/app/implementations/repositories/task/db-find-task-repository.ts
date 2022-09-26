@@ -41,7 +41,7 @@ export class DbFindTaskRepository extends DbRepository implements FindTaskReposi
   async findOne(data: FindTaskDto): Promise<TaskEntity> {
     const repo = await this.getRepo()
     const queryData = this.getQueryData(data)
-    const payload = await repo.findOne({ where: queryData })
+    const payload = Object.keys(queryData).length > 0 ? await repo.findOne({ where: queryData }) : null
     return payload
   }
 

@@ -12,7 +12,7 @@ export class DeleteTask implements DeleteTaskUc {
     private readonly deleteTaskRepository: DeleteTaskRepository
   ) { }
 
-  async exec (data: DeleteTaskDto): Promise<Result<boolean>> {
+  async exec (data: DeleteTaskDto): Promise<Result<void>> {
     const { id } = data
     const task = await this.findTaskRepository.findOne({ id })
     if (!task) {

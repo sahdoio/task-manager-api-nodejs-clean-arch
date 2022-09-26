@@ -9,6 +9,7 @@ const config: Config = {
     'main',
     'entities',
     'database',
+    'helpers',
     'env',
     'server.ts',
     'errors/index.ts'

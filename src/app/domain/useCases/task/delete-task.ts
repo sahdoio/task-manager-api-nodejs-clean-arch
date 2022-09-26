@@ -5,5 +5,5 @@ export interface DeleteTaskDto {
 }
 
 export interface DeleteTaskUc {
-  exec: (data: DeleteTaskDto) => Promise<Result<boolean>>
+  exec: (data: DeleteTaskDto) => Promise<Result<void>>
 }
