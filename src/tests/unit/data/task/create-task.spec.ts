@@ -4,6 +4,7 @@ import { Internationalization } from '../../../../app/data/protocols/utils/inter
 import { CreateTask } from '../../../../app/data/useCases/task/create-task'
 import { CreateTaskDto, CreateTaskUc } from '../../../../app/domain/useCases/task/create-task'
 import Config from '../../../../config/config'
+import { taskEntityMock } from '../../../utils/mocks/task/task-entity-mock'
 import { I18nStub } from '../../../utils/stubs/i18n-stub'
 import { CreateTaskRepositoryStub } from '../../../utils/stubs/repositories/task/create-task-repository-stub'
 
@@ -39,6 +40,6 @@ describe('CreateTask', () => {
   test('Should return 200 if the task creation was executed successfully', async () => {
     const { sut, i18nStub, createTaskRepositoryDto } = makeSut()
     const res = await sut.exec(createTaskRepositoryDto)
-    expect(res).toEqual(ok(i18nStub.t('CREATE_TASK_SUCCESSFUL')))
+    expect(res).toEqual(ok(i18nStub.t('CREATE_TASK_SUCCESSFUL'), taskEntityMock))
   })
 })

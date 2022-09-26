@@ -3,7 +3,7 @@ import { FindUserRepository } from '../../../../../app/data/protocols/repositori
 import { UserEntity } from '../../../../../app/domain/entities/User'
 import { UcOptions } from '../../../../../app/domain/protocols/uc-options'
 import { FindUserDto } from '../../../../../app/domain/useCases/user/find-user'
-import { repositoryMetadataMock } from '../../../mocks/repository-metadata'
+import { repositoryMetadataMock } from '../../../mocks/repository-metadata-mock'
 import { userEntityMock } from '../../../mocks/user/user-entity-mock'
 import { DbRepositoryStub } from '../db-repository-stub'
 

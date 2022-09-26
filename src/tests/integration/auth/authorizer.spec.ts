@@ -5,7 +5,6 @@ import env from '../../../env'
 import { JsonWebToken } from '../../../app/implementations/encrypters/jwt'
 import { Log } from '../../../app/implementations/helpers/log'
 import { DbFindUserRepository } from '../../../app/implementations/repositories/user/db-find-user-repository'
-import { authorizerResponseMock } from '../../utils/mocks/auth/authorizer-response-mock'
 import { userEntityMock } from '../../utils/mocks/user/user-entity-mock'
 import { SequelizeORM } from '../../../app/implementations/database/sequelize'
 import Config from '../../../config/config'
@@ -15,7 +14,6 @@ import { faker } from '@faker-js/faker'
 import { CreateUserDto } from '../../../app/domain/useCases/user/create-user'
 import { Bcrypt } from '../../../app/implementations/encrypters/bcrypt'
 import { DbCreateUserRepository } from '../../../app/implementations/repositories/user/db-create-user-repository'
-import { Token } from '../../../app/domain/protocols/token'
 
 interface LoginCredentials {
   email: string,

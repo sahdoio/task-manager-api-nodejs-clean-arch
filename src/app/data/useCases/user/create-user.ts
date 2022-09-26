@@ -25,7 +25,7 @@ export class CreateUser implements CreateUserUc {
     if (existingAccount) {
       return unprocessableEntity(this.i18n.t('ERROR_EXISTING_USER'))
     }
-    await this.createUserRepository.exec({ ...data, password: await this.bcrypt.encrypt(data.password) })
-    return ok(this.i18n.t('CREATE_USER_SUCCESSFUL'))
+    const user = await this.createUserRepository.exec({ ...data, password: await this.bcrypt.encrypt(data.password) })
+    return ok(this.i18n.t('CREATE_USER_SUCCESSFUL'), user)
   }
 }

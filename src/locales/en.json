@@ -2,6 +2,7 @@
 	"LOGIN_SUCCESSFUL": "Login successful",
 	"INVALID_LOGIN": "Invalid email, password and/or token(s)",
 	"CREATE_USER_SUCCESSFUL": "User created successfully",
+	"ERROR_EXISTING_USER": "User already exists",
 	"CREATE_TASK_SUCCESSFUL": "Task created successfully",
-	"ERROR_EXISTING_USER": "User already exists"
+	"FIND_TASK_SUCCESSFUL": "Tasks retrieved successfully"
 }

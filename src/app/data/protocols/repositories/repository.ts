@@ -7,11 +7,17 @@ export interface RepositoryMetadata {
   itemsPerPage?: number
 }
 
+export interface SetupPaginationData {
+  offset: number
+  limit: number
+}
+
 export interface PaginatedResult<T> {
   payload: T
   metadata: RepositoryMetadata
 }
 
 export interface Repository {
-  setupPagination (payload: any[], opts?: UcOptions): Promise<RepositoryMetadata>
+  setupPagination (opts?: UcOptions): Promise<SetupPaginationData>
+  getMetadata (repo: any, queryData: any, opts?: UcOptions): Promise<RepositoryMetadata>
 }

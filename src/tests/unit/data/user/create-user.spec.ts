@@ -20,11 +20,11 @@ interface SutTypes {
 const makeSut = (): SutTypes => {
   new Application(true)
   const createUserRepositoryDto = {
-    "email": "create_user_unit_test@test.com",
-    "firstName": "User",
-    "lastName": "Unit Test",
-    "phoneNumber": "9999999999",
-    "password": "123456"
+    email: "create_user_unit_test@test.com",
+    firstName: "User",
+    lastName: "Unit Test",
+    phoneNumber: "9999999999",
+    password: "123456"
   }
   const i18nStub = new I18nStub()
   const bcryptStub = new BcryptStub()
@@ -50,7 +50,7 @@ describe('CreateUser', () => {
     const { sut, i18nStub, createUserRepositoryDto, findUserRepositoryStub } = makeSut()
     jest.spyOn(findUserRepositoryStub, 'findOne').mockImplementation(() => null)
     const res = await sut.exec(createUserRepositoryDto)
-    expect(res).toEqual(ok(i18nStub.t('CREATE_USER_SUCCESSFUL')))
+    expect(res).toEqual(ok(i18nStub.t('CREATE_USER_SUCCESSFUL'), userEntityMock))
   })
 
   test('Should return 422 if the user already exists with the given email', async () => {
