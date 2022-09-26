@@ -11,3 +11,9 @@ export const unprocessableEntity = (msg?: string, data?: any): any => ({
   msg,
   data
 })
+
+export const notFound = (msg?: string, data?: any): any => ({
+  code: StatusCodes.NOT_FOUND,
+  msg,
+  data
+})

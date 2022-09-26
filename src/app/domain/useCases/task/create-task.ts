@@ -8,5 +8,5 @@ export interface CreateTaskDto {
 }
 
 export interface CreateTaskUc {
-  exec: (user: CreateTaskDto) => Promise<Result<TaskEntity>>
+  exec: (data: CreateTaskDto) => Promise<Result<TaskEntity>>
 }
