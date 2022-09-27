@@ -87,7 +87,7 @@ Before start to test the application you should run the migrations and seeder to
 
 * Postman Project
 
-    See [Postman Collection](.docs/collection.json)
+    See [Postman Collection](./docs/collection.json)
   
 ### Who do I talk to? ###
 
