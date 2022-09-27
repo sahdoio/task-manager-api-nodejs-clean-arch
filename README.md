@@ -1,29 +1,94 @@
-# Task Manager #
+# Task Manager API #
 
-This README would normally document whatever steps are necessary to get your application up and running.
+This is an API Rest developed with NodeJs, TypeScript and Clean Architecture.
 
-### What is this repository for? ###
-
-* Quick summary
-* Version
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
+* node version: 14.17.6
+* Database: PostGres SQL
+* TypeScript
+* Tests made with Jest
+* Containers with Docker
 
 ### How do I get set up? ###
 
-* Summary of set up
-* Configuration
-* Dependencies
-* Database configuration
-* How to run tests
-* Deployment instructions
+* .env
+  
+  Rename or copy the .env.example to .env
 
-### Contribution guidelines ###
+        cp .env.example .env
 
-* Writing tests
-* Code review
-* Other guidelines
+  The .env is configured to use docker database setup
 
+* build app
+
+    In the app root (the same dir where is located the package.json and this README) run:
+
+        docker compose up --build -d
+
+    Just to make sure node_modules was really installed run npm install
+
+        docker exec task-manager-api npm i
+
+    To check docker live logging:
+
+        docker-compose logs -f --tail 10
+    
+    You should see the following containers active:
+
+    ![alt text](./docs/dockerps.png)
+
+
+### Database Setup ###
+
+Before start to test the application you should run the migrations and seeder to setup the development database and the test database as well to run the integration tests
+
+* Running migration for development 
+        
+        docker exec task-manager-api npx sequelize-cli db:migrate
+
+    ![alt text](./docs/migration.png)
+
+* Running migration for test
+
+        docker exec task-manager-api npx sequelize-cli db:migrate --env test
+
+* Running seeders for development 
+        
+        docker exec task-manager-api npx sequelize-cli db:seed:all
+
+    ![alt text](./docs/seed.png)
+
+* Running seeders for test
+
+        docker exec task-manager-api npx sequelize-cli db:seed:all --env test
+
+* The final result:
+  
+    ![alt text](./docs/database.png)
+
+### How to run unit tests? ###
+
+* Normal test  
+        
+        docker-compose exec task-manager-api npx jest
+
+    ![alt text](./docs/tests.png)
+
+* With coverage
+
+        docker-compose exec task-manager-api npx jest --coverage
+    
+    Terminal version
+
+    ![alt text](./docs/tests-coverage.png)
+
+    Html version
+
+    ![alt text](./docs/tests-coverage-html.png)
+
+* Postman Project
+
+    See [Postman Collection](.docs/collection.json)
+  
 ### Who do I talk to? ###
 
-* Repo owner or admin
-* Other community or team contact
+* Lucas sahdo - lucassahdo@gmail.com
