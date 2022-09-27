@@ -6,5 +6,6 @@
 	"ERROR_EXISTING_USER": "User already exists",
 	"CREATE_TASK_SUCCESSFUL": "Task created successfully",
 	"FIND_TASK_SUCCESSFUL": "Tasks retrieved successfully",
-	"DELETE_TASK_SUCCESSFUL": "Task deleted successfully"
+	"DELETE_TASK_SUCCESSFUL": "Task deleted successfully",
+	"UPDATE_TASK_SUCCESSFUL": "Task updated successfully"
 }
