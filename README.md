@@ -91,4 +91,4 @@ Before start to test the application you should run the migrations and seeder to
   
 ### Who do I talk to? ###
 
-* Lucas sahdo - lucassahdo@gmail.com
+* Lucas Sahdo - lucassahdo@gmail.com
